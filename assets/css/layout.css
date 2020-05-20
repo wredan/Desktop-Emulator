@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;800&display=swap');
+
+.main-container {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../image/background-bicubic.jpg');
+    background-color: #272725;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+}
+
+/* **** HEADER **** */
+
+/* .header {
+    padding: 10px 20px;
+}
+
+.title, .description {
+    padding: 5px 0;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+.description {
+    padding: 2px 0;
+    font-weight: 400;
+    font-size: 1em;
+} */
+
+/* **** WINDOW **** */
+
+.window {    
+    position: absolute;
+    display: inline-block;
+    top: 200px;
+    bottom: 200px;
+    left: 400px;
+    right: 400px;
+    background-color: #37474f;
+    border-radius: 2px;
+    resize: both;
+    overflow: auto;
+    opacity: 0;
+    z-index: 140;
+    backface-visibility: hidden;
+}
+
+.window-bar {
+    padding-top: 2px;
+}
+
+.window-title {
+    display: inline-block;
+    padding-top: 5px;
+    padding-left: 7px;
+}
+
+.window-open {
+    z-index: 141;
+}
+
+/* **** WINDOW ACTION BAR **** */
+
+.action-bar {
+    float: right;
+    fill: #e0e0e0;
+}
+
+.action-bar div {
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 4px;
+}
+
+.action-bar div:hover {
+    background-color: #62727b;
+}
+
+.action-bar .close:hover {
+    background-color: #d50000;
+}
+
+/* **** APPLICATION BAR **** */
+
+#application-bar {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    min-height: 44px;
+    background-color: #37474f;
+    z-index: 150;
+}
+
+#application-bar > div {
+    display: inline-block;
+    padding: 3px 15px;       
+    min-height: 36px;
+    min-width: 24px;
+    fill: whitesmoke;
+}
+
+#application-bar div:hover {
+    background-color: #718792;
+}
+
+.application-bar-icon div{
+    text-align: center;
+    font-size: 8px;
+}
+
+.open {
+    background-color: #455a64;
+}
+
+/* **** MENU BAR **** */
+
+#menu {
+    position: absolute;
+    display: inline-block;
+    top: 2000px;
+    min-width: 200px;
+    background-color: #303e45;
+    cursor: default;  
+    z-index: 145; 
+}
+
+#menu > .menu-option {
+    text-align: left;    
+    line-height: 30px;
+    padding-top: 10px;
+    vertical-align: middle;
+}
+
+#menu > .menu-option > div {
+    min-height: 40px;
+}
+
+.menu-option:hover {
+    background-color: #718792;
+}
+
+/* **** DESKTOP ICON **** */
+
+.desktop-icon {
+    position: absolute;
+    text-align: center;
+    z-index: 5; 
+}
+
+#desktop-icons-area {
+    position: absolute;
+    display: inline-block;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 44px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* **** SCROLLER THEME **** */
+
+.scroller {
+    overflow-y: scroll;
+    scrollbar-color: rgb(10, 10, 10) rgb(27, 27, 27);
+    scrollbar-width: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+    background-color: rgb(15, 15, 15);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(40, 40, 40);  
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(27, 27, 27);
+}
+
+/* **** GENERAL **** */
+
+.base-text {
+    color: whitesmoke;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.pd-bot-1 {
+    padding-bottom: 5px;
+}
+
+.pd-bot-2 {
+    padding-bottom: 10px;
+}
+
+.pd-top-2 {
+    padding-top: 10px;
+}
+
+.row {
+    margin: 0px;
+}
+
+div:focus {
+    outline: none;
+}
+
+.montserrat-500 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.montserrat-600 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.montserrat-800 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+.clock{
+    float: right;
+    color: white;
+    white-space: pre-line;
+    text-align: center;
+    height: 100%;
+    margin-right: 2px;
+}
+
+.text-center {
+    text-align: center !important;
+}

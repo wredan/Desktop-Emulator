@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+.bash-container {
+    position: absolute;
+    display: inline-block;
+    top: 30px;
+    left: 0px;
+    bottom: 0px;   
+    right: 0px; 
+    padding-left: 10px;
+    background-color: rgb(15, 15, 15);
+    overflow-y: scroll;
+}
+
+.command-col {
+    color: whitesmoke;
+    font-family: 'Ubuntu mono';
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.username {
+    color: rgb(75, 238, 0);
+}
+
+.colon {
+    color: whitesmoke;
+}
+
+.path, .dollar {
+    color: blue;
+}
+
+.sign-container {
+    display: inline-block;
+    /* float: left;
+    width: 155px; */
+}
+
+.input-container {
+    display: inline-block;
+    min-width: calc(100% - 230px); 
+    /* margin-left: 155px; */
+} 
+
+.custom-command-input {
+    border: none;
+    background-color: rgb(15, 15, 15);
+    color: white;
+    font-family: 'Ubuntu mono';
+    /* border-bottom: 1px solid white; */
+    font-weight: 500;
+    font-size: medium;
+    min-width: 100%; 
+}
+
+.custom-command-input:focus {
+    outline: none;
+}
+
+.common-text {
+   padding: 5px 0px;
+   color: whitesmoke;
+   font-family: 'Ubuntu mono';
+}
+
+.bash-container li {
+    padding-top: 5px;
+}
+
+.bash-container .orange {
+    color: rgb(235, 176, 48) !important;
+}
+
+.bash-container .yellow {
+    color: yellow !important;
+}
+
+.bash-container table {
+    text-align: center;
+}
+
+.bash-container table td{
+    padding: 2px 10px;
+}
+
+.bash-container a {
+   color: rgb(235, 176, 48);
+}
+
+.bash-container a:hover {
+    color: rgb(185, 138, 37);
+}
+
+@media (max-width: 500px) {
+    .bash-container {
+        top: 130px;
+    }
+ } 
