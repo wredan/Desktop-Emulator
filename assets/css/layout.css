@@ -51,6 +51,7 @@
     opacity: 0;
     z-index: 140;
     backface-visibility: hidden;
+    opacity: 0.8;
 }
 
 .window-bar {
@@ -58,13 +59,32 @@
 }
 
 .window-title {
-    display: inline-block;
-    padding-top: 5px;
+    display: inline-block;    
+    padding-top: 3px;
     padding-left: 7px;
 }
 
 .window-open {
     z-index: 141;
+    opacity: 1;
+}
+
+.window-container {
+    position: absolute;
+    display: inline-block;
+    top: 30px;
+    left: 3px;
+    bottom: 3px;   
+    right: 3px; 
+}
+
+.window-bar .icon-image {
+    display: inline-block;    
+    padding-left: 7px;
+}
+
+.maximized {
+    resize: none;
 }
 
 /* **** WINDOW ACTION BAR **** */
@@ -127,7 +147,7 @@
     position: absolute;
     display: inline-block;
     top: 2000px;
-    min-width: 200px;
+    min-width: 230px;
     background-color: #303e45;
     cursor: default;  
     z-index: 145; 

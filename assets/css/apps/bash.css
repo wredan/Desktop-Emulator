@@ -3,7 +3,7 @@
 .bash-container {
     position: absolute;
     display: inline-block;
-    top: 30px;
+    top: 0px;
     left: 0px;
     bottom: 0px;   
     right: 0px; 
@@ -92,8 +92,8 @@
     color: rgb(185, 138, 37);
 }
 
-@media (max-width: 500px) {
+/* @media (max-width: 500px) {
     .bash-container {
         top: 130px;
     }
- } 
+ }  */

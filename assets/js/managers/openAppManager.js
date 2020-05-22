@@ -8,39 +8,37 @@ function openBash() {
             <div id="icona-bash-` + i + `" data-id="` + i + `" class="application-bar-icon base-text open"><div><img src="assets/image/icon/terminal.webp" alt="Terminale" width="24px"><br><span>` + i + `</span></div></div>
         `);
 
-    let terminalId = '#bash-' + i;
-    $('.main-container').append(windowLayout('bash-' + i, "icona-bash-" + i, 'bash-' + i, bash));
-    openWindowAnimation(terminalId)
-    setIconAndWindowEvent(terminalId);
-    setActionBarEvent(terminalId);
-    windowDragAndDorp(terminalId);
-    initBash(terminalId);
+    $('.main-container').append(windowLayout('bash-' + i, "icona-bash-" + i, 'bash-' + i, bash, "terminal.webp"));
+    startingApp('#bash-' + i, initBash);
 }
 
-function openFileUploader() {
+function openFileManager() {
     let i = 0;
-    while ($.inArray(++i, appInstances.fileuploader) != -1);
-    appInstances.fileuploader.push(i);
+    while ($.inArray(++i, appInstances.filemanager) != -1);
+    appInstances.filemanager.push(i);
     $('#application-bar').append(`
-            <div id="icona-fileuploader-` + i + `" data-id="` + i + `" class="application-bar-icon base-text open"><div><img src="assets/image/icon/fileloader.webp" alt="Carica File" width="24px"><br><span>` + i + `</span></div></div>
+            <div id="icona-filemanager-` + i + `" data-id="` + i + `" class="application-bar-icon base-text open"><div><img src="assets/image/icon/closed-folder.webp" alt="Carica File" width="24px"><br><span>` + i + `</span></div></div>
         `);
 
-    let file = '#fileuploader-' + i;
-    $('.main-container').append(windowLayout('fileuploader-' + i, "icona-fileuploader-" + i, 'fileuploader-' + i, fileUploader));
-    openWindowAnimation(file)
-    setIconAndWindowEvent(file);
-    setActionBarEvent(file);
-    windowDragAndDorp(file);
-    initFileUploader(file)
+    $('.main-container').append(windowLayout('filemanager-' + i, "icona-filemanager-" + i, 'filemanager-' + i, fileManager, "closed-folder.webp"));
+    startingApp('#filemanager-' + i, initFileManager);
 }
 
 function selectAppIstance(selector) {
     switch (selector) {
         case "bash": openBash();
             break;
-        case "fileuploader": openFileUploader();
+        case "filemanager": openFileManager();
             break;
         default:
             break;
     }
+}
+
+function startingApp(appId, initApp) {
+    openWindowAnimation(appId)
+    setIconAndWindowEvent(appId);
+    setActionBarEvent(appId);
+    windowDragAndDorp(appId);
+    initApp(appId);
 }

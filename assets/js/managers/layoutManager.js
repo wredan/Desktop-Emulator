@@ -12,37 +12,41 @@ function openWindowAnimation(appId) {
     let posIconaX = $('#' + $(appId).data('iconid')).offset().left;
     let posIconaY = $('#' + $(appId).data('iconid')).offset().top;
     $(appId).css({ top: posIconaY, bottom: docHeight - posIconaY, left: posIconaX, right: docWidth - posIconaX })
-        .removeClass('minimized')
-        .addClass('window-open')
+        .removeClass('minimized')       
         .show();
-    if ($(appId).hasClass("maximized"))
+    if ($(appId).hasClass("maximized") || docWidth < 500)
         maximizeAnimation(appId)
     else {
         let arrayId = Number(appId.split('-')[1]);
         let size = 15;
-        let top = (size - 3) + arrayId;
+        let rediceLeftAndRight = (docWidth < 1024) ? 0 : 8;
+        let top = (size - 4) + arrayId;
         let bottom = size - arrayId;
-        let left = size + arrayId;
-        let right = size - arrayId;
+        let left = (size + rediceLeftAndRight) + arrayId;
+        let right = (size + rediceLeftAndRight) - arrayId;
 
-        $(appId).animate({ top: top + "%", bottom: bottom + "%", left: left + "%", right: right + "%", opacity: 1 });
+        $(appId).animate({ top: top + "%", bottom: bottom + "%", left: left + "%", right: right + "%"});
     }
 }
 
 function minimizeWindowAnimation(id) {
     let posIconaX = $('#' + $(id).data('iconid')).offset().left;
     let posIconaY = $('#' + $(id).data('iconid')).offset().top;
-    $(id).animate({ top: posIconaY, bottom: docHeight - posIconaY, left: posIconaX, right: docWidth - posIconaX, opacity: 0 })
-        .removeClass("window-open")
-        .addClass("minimized");
+    $(id).animate({ top: posIconaY, bottom: docHeight - posIconaY, left: posIconaX, right: docWidth - posIconaX})        
+        .addClass("minimized")
+        .removeClass("window-open");
 
     $('#' + $(id).data('iconid')).removeClass('open');
 }
 
 function maximizeAnimation(id) {
+    let windowContainerElement = $(id).find('.window-container');
     $(id).css({ width: 'auto', height: 'auto' });
+    let left = windowContainerElement.css('left').split('px')[0];
+    let right = windowContainerElement.css('right').split('px')[0];
+    let bot = windowContainerElement.css('bottom').split('px')[0];
     $(id)
-        .animate({ top: 0, bottom: 44, left: 0, right: 0, opacity: 1 }, "fast")
+        .animate({ top: 0, bottom: (44 - bot) + "px", left: (0 - left) + "px", right: (0 - right) + "px"}, "fast")
         .addClass("maximized");
     if (id.indexOf("bash") >= 0)
         $(id + ' .bash-container').addClass("pd-bot-2");
@@ -55,7 +59,7 @@ function getBackFromMaximizeAnimation(id) {
     let bottom = size + arrayId;
     let left = size + arrayId;
     let right = size + arrayId;
-    $(id).animate({ top: top + "%", bottom: bottom + "%", left: left + "%", right: right + "%", opacity: 1 }, "fast")
+    $(id).animate({ top: top + "%", bottom: bottom + "%", left: left + "%", right: right + "%"}, "fast")
         .removeClass("maximized");
     if (id.indexOf("bash") >= 0)
         $(id + ' .bash-container').removeClass("pd-bot-2");
@@ -71,8 +75,8 @@ var deleteWindow = (id, type) => {
                 return value != arrayId;
             });
             break;
-        case "fileuploader":
-            appInstances.fileuploader = $.grep(appInstances.fileuploader, function (value) {
+        case "filemanager":
+            appInstances.filemanager = $.grep(appInstances.filemanager, function (value) {
                 return value != arrayId;
             });
             break;
@@ -85,8 +89,7 @@ var deleteWindow = (id, type) => {
 
 function iconDragAndDorp(selector) {    
     $(selector).mousedown(function (e) {
-        e.preventDefault();
-        $(this).css('z-index', 110);
+        e.preventDefault();        
         dragging = true;
         offset = {
             top: (e.pageY - $(this).offset().top),
@@ -108,18 +111,20 @@ function iconDragAndDorp(selector) {
 
 function windowDragAndDorp(selector) {
     $(selector).find('.window-bar').mousedown(function (e) {
+        let parentWindow = $(this).parent();
         e.preventDefault();
-        $('.window-open').removeClass('window-open');
-        $(this).parent().addClass('window-open');
+        setFrontWindow('#' + parentWindow.attr('id'));
+        parentWindow.focus();
         dragging = true;
-        let terminal = $(this).parent();
-        let posTop = terminal.offset().top;
-        let posLeft = terminal.offset().left;
+        if(parentWindow.hasClass('maximized'))
+            dragging = false;        
+        let posTop = parentWindow.offset().top;
+        let posLeft = parentWindow.offset().left;
         offset = {
             top: (e.pageY - posTop),
             left: (e.pageX - posLeft),
-            right: ((docWidth - e.pageX) - (docWidth - (posLeft + terminal.width()))),
-            bottom: ((docHeight - e.pageY) - (docHeight - (posTop + terminal.height()))),
+            right: ((docWidth - e.pageX) - (docWidth - (posLeft + parentWindow.width()))),
+            bottom: ((docHeight - e.pageY) - (docHeight - (posTop + parentWindow.height()))),
         };
         activeDragable = selector;
     });
@@ -163,35 +168,29 @@ function setActionBarEvent(id) {
 }
 
 function setIconAndWindowEvent(id) {
-    $('.window-open').removeClass('window-open');
-    $(id).addClass('window-open');
+    setFrontWindow(id);
 
-    $('#application-bar .open').removeClass('open');
-    $('#' + $(id).data('iconid')).addClass('open');
-
-    $('.bash-window').on('focusin', function () {
-        $('.window-open').removeClass('window-open');
-        $(this).addClass('window-open');
-
-        $('#application-bar .open').removeClass('open');
-        $('#' + $(id).data('iconid')).addClass('open');
+    $(id).on('focusin', function () {
+        setFrontWindow(id);
     })
 
     $('#' + $(id).data('iconid')).click(function () {
         if ($(id).hasClass("minimized")) {
-            $('.window-open').removeClass('window-open');
+            setFrontWindow(id);
             openWindowAnimation(id);
-            $('#application-bar .open').removeClass('open');
-            $('#' + $(id).data('iconid')).addClass('open');
         } else if ($(id).hasClass("window-open")) {
             minimizeWindowAnimation(id);
         } else {
-            $('.window-open').removeClass('window-open');
-            $(id).addClass('window-open');
-            $('#application-bar .open').removeClass('open');
-            $('#' + $(id).data('iconid')).addClass('open');
+            setFrontWindow(id);
         }
     })
+}
+
+function setFrontWindow(id) {
+    $('.window-open').removeClass('window-open');
+    $(id).addClass('window-open');
+    $('#application-bar .open').removeClass('open');
+    $('#' + $(id).data('iconid')).addClass('open');
 }
 
 /* ********** START UP RENDERING ********** */
@@ -254,7 +253,7 @@ $(document).ready(function () {
     let excludedAppList = [];
     menuTopPosition = (docHeight - 44) - ((appList.length - excludedAppList.length) * 50);
     appInstances.terminali = [];
-    appInstances.fileuploader = [];
+    appInstances.filemanager = [];
 
     generateUIAppEntryPoint(excludedAppList);
     $('.main-container').fadeIn('slow');

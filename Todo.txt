@@ -1,0 +1,5 @@
+Comabiare nome ad upload in gestore file
+Onfocus nel gestore file fare refresh in modo da evitare problemi di sincronizzazione
+
+
+unificare le icone in basso, togliere il numeretto e invece aprire un menu toggle (come il menu) in cui selezionare l'istanza dell'app che interessa.
