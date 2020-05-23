@@ -17,15 +17,8 @@ function openWindowAnimation(appId) {
     if ($(appId).hasClass("maximized") || docWidth < 500)
         maximizeAnimation(appId)
     else {
-        let arrayId = Number(appId.split('-')[1]);
-        let size = 15;
-        let rediceLeftAndRight = (docWidth < 1024) ? 0 : 8;
-        let top = (size - 4) + arrayId;
-        let bottom = size - arrayId;
-        let left = (size + rediceLeftAndRight) + arrayId;
-        let right = (size + rediceLeftAndRight) - arrayId;
-
-        $(appId).animate({ top: top + "%", bottom: bottom + "%", left: left + "%", right: right + "%"});
+        let dim = getStandardWindowDim(appId);       
+        $(appId).animate({ top: dim.top + "%", bottom: dim.bottom + "%", left: dim.left + "%", right: dim.right + "%"});
     }
 }
 
@@ -52,14 +45,9 @@ function maximizeAnimation(id) {
         $(id + ' .bash-container').addClass("pd-bot-2");
 }
 
-function getBackFromMaximizeAnimation(id) {
-    let arrayId = Number(id.split('-')[1]);
-    let size = 15;
-    let top = size + arrayId;
-    let bottom = size + arrayId;
-    let left = size + arrayId;
-    let right = size + arrayId;
-    $(id).animate({ top: top + "%", bottom: bottom + "%", left: left + "%", right: right + "%"}, "fast")
+function getBackFromMaximizeAnimation(id) {    
+    let dim = getStandardWindowDim(id);
+    $(id).animate({ top: dim.top + "%", bottom: dim.bottom + "%", left: dim.left + "%", right: dim.right + "%"}, "fast")
         .removeClass("maximized");
     if (id.indexOf("bash") >= 0)
         $(id + ' .bash-container').removeClass("pd-bot-2");
@@ -85,6 +73,19 @@ var deleteWindow = (id, type) => {
     }
 }
 
+function getStandardWindowDim(id){
+    let arrayId = Number(id.split('-')[1]);
+    let size = 15;
+    let reduceLeftAndRight = (docWidth < 1024) ? 0 : 8;
+    let dim = {
+        top: (size - 4) + arrayId,
+        bottom: size - arrayId,
+        left: (size + reduceLeftAndRight) + arrayId,
+        right: (size + reduceLeftAndRight) - arrayId
+    }
+    return dim;
+}
+
 /* ********** DRAG & DROP ********** */
 
 function iconDragAndDorp(selector) {    
@@ -97,7 +98,7 @@ function iconDragAndDorp(selector) {
         };
         activeDragable = selector;
     })
-    $(".main-container").mousemove(function (e) {
+    $("#main-container").mousemove(function (e) {
         if (dragging) {
             $(activeDragable).css({ top: e.pageY - offset.top, left: e.pageX - offset.left });
         }
@@ -128,7 +129,7 @@ function windowDragAndDorp(selector) {
         };
         activeDragable = selector;
     });
-    $(".main-container").mousemove(function (e) {
+    $("#main-container").mousemove(function (e) {
         if (dragging) {
             $(activeDragable).css({ top: e.pageY - offset.top, left: e.pageX - offset.left, right: (docWidth - e.pageX) - offset.right, bottom: (docHeight - e.pageY) - offset.bottom });
         }
@@ -256,6 +257,11 @@ $(document).ready(function () {
     appInstances.filemanager = [];
 
     generateUIAppEntryPoint(excludedAppList);
-    $('.main-container').fadeIn('slow');
+    $('#main-container').fadeIn('slow');
+
+    $("#main-container").on('mouseup', function(e){
+        if(e.which == 1)
+            $('#contextmenu').hide().empty();
+    });
    
 });

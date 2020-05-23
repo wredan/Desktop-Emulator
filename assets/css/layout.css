@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;800&display=swap');
 
-.main-container {
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+#main-container {
     position: absolute;
     display: block;
     top: 0;
@@ -50,7 +55,8 @@
     overflow: auto;
     opacity: 0;
     z-index: 140;
-    backface-visibility: hidden;
+    /* https://stackoverflow.com/questions/28511539/the-underlying-magic-of-webkit-backface-visibility */
+    backface-visibility: hidden; 
     opacity: 0.8;
 }
 
@@ -211,6 +217,52 @@
     background: rgb(27, 27, 27);
 }
 
+/* **** CONTEXTMENU **** */
+
+#contextmenu {
+    display: none;
+    position: absolute;
+    z-index: 200;
+    cursor: default;  
+}
+
+.contextmenu-voices, .contextmenu-subvoices {
+    position: absolute;
+    background-color: #ffffff;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    border-radius: 5px;
+   
+}
+.contextmenu-voice {
+    position: relative;
+}
+.contextmenu-voice .menu-label {
+    padding: 0.5em 0.3em;
+    width: 100px;
+    border-radius: 5px;
+}
+.contextmenu-voices .menu-label:hover {
+    background-color: #e3f2fd;
+}
+
+.contextmenu-voices .menu-label:hover > .contextmenu-subvoices{
+   display: inline-block;          
+}
+
+.contextmenu-voice .contextmenu-subvoices {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 98px;           
+}
+
+.contextmenu-voice .menu-label .contextmenu-arrow {
+    float: right;
+}
+
 /* **** GENERAL **** */
 
 .base-text {
@@ -265,4 +317,8 @@ div:focus {
 
 .text-center {
     text-align: center !important;
+}
+
+.hidden {
+    display: none;
 }

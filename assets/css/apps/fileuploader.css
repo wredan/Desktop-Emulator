@@ -5,11 +5,28 @@
     left: 0px;
     bottom: 0px;   
     right: 0px; 
-    background-color: #cfd8dc;
+    background-color: #fff59d;
+}
+
+.file-manager-container .btn {
+    background-color: #ffc046;
+    border: 0px;
+    padding: 0.5em 1em;
+    outline: none;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.file-manager-container .btn:hover {
+    background-color: #ff8f00;
+    fill: white;
+    color: white;
 }
 
 .file-manager-container .navigation-area {
     padding-top: 2px;
+    text-align: center;
 }
 
 .file-manager-container .back-path-button, .file-manager-container input[type="text"] {
@@ -17,7 +34,7 @@
     height: 25px;
     outline: none;
     border-radius: 5px;
-    border: 1px solid lightgray;
+    border: 0px
 }
 
 .file-manager-container input[type="text"] {     
@@ -26,7 +43,8 @@
 }
 
 .file-manager-container .back-path-button {
-    padding: 2px 0px 0px 0px;    
+    padding: 2px 0px 0px 0px; 
+    width: 50px;   
 }
 
 .file-manager-container .file-area {
@@ -34,8 +52,8 @@
     top: 30px;
     left: 0px;
     right: 0px;
-    bottom: 30%;
-    background-color: #ecf1f3;
+    bottom: 10%;
+    background-color: #fafafa;
     overflow-y: auto;
 }
 
@@ -54,34 +72,28 @@
     bottom: 0px;
     left: 0px;
     right: 0px;
-    top: 70%;
+    top: 90%;
     text-align: center;  
+    background-color: #fff59d;
 }
 
 .file-manager-container .upload-area .upload-form{
-    margin-top: 3%;
+    margin-top: 1.5%;
 }
 
-.file-manager-container .upload-area .esito {
-    margin-left: 5%;
-    color: green;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-}
-
-.file-manager-container .upload-area .progress-bar-container {
+.file-manager-container .file-area .progress-bar-container {
     display: none;
-    margin-top: 3%;
-    margin-left: 10%;
-    margin-right: 10%;
+    position: absolute;
+    min-width: 100%;
+    bottom: 0px;
 }
 
-.file-manager-container .upload-area .progress-bar-container .progress-bar {
+.file-manager-container .file-area .progress-bar-container .progress-bar {
     width: 100%;
-    background-color:#b0bec5;
+    background-color:#fafafa;
   }
   
-.file-manager-container .upload-area .progress-bar-container .progress {
+.file-manager-container .file-area .progress-bar-container .progress {
     width: 1%;
     height: 20px;
     background-color: #43a047;

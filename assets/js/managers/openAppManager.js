@@ -8,7 +8,7 @@ function openBash() {
             <div id="icona-bash-` + i + `" data-id="` + i + `" class="application-bar-icon base-text open"><div><img src="assets/image/icon/terminal.webp" alt="Terminale" width="24px"><br><span>` + i + `</span></div></div>
         `);
 
-    $('.main-container').append(windowLayout('bash-' + i, "icona-bash-" + i, 'bash-' + i, bash, "terminal.webp"));
+    $('#main-container').append(windowLayout('bash-' + i, "icona-bash-" + i, 'bash-' + i, bash, "terminal.webp"));
     startingApp('#bash-' + i, initBash);
 }
 
@@ -19,8 +19,8 @@ function openFileManager() {
     $('#application-bar').append(`
             <div id="icona-filemanager-` + i + `" data-id="` + i + `" class="application-bar-icon base-text open"><div><img src="assets/image/icon/closed-folder.webp" alt="Carica File" width="24px"><br><span>` + i + `</span></div></div>
         `);
-
-    $('.main-container').append(windowLayout('filemanager-' + i, "icona-filemanager-" + i, 'filemanager-' + i, fileManager, "closed-folder.webp"));
+    let appId = 'filemanager-' + i;
+    $('#main-container').append(windowLayout(appId, "icona-filemanager-" + i, appId, fileManager, "closed-folder.webp"));
     startingApp('#filemanager-' + i, initFileManager);
 }
 
