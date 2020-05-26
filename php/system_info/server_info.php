@@ -122,17 +122,65 @@ function shapeSpace_memory_usage() {
 	return $memory;
 }
 
+function formatBytes($size, $precision = 2) {
+    $base = log($size, 1024);
+    $suffixes = array('B', 'KB', 'MB', 'GB', 'TB');   
+
+    return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     
-    echo json_encode(["esito" => "success", "data" => [
-        "caricoSistema" => shapeSpace_system_load(),
-        "numeroCore" => shapeSpace_system_cores(),
-        "numeroHTTPConnection" => shapeSpace_http_connections(),
-        "serverUptime" => shapeSpace_server_uptime(),
-        "kernelVersion" => shapeSpace_kernel_version(),
-        "processNumber" => shapeSpace_number_processes(),
-        "memoryUsage" => shapeSpace_memory_usage(),
-    ]]);      
+    // echo json_encode(["esito" => "success", "data" => [
+    //     "caricoSistema" => shapeSpace_system_load(),
+    //     "numeroCore" => shapeSpace_system_cores(),
+    //     "numeroHTTPConnection" => shapeSpace_http_connections(),
+    //     "serverUptime" => shapeSpace_server_uptime(),
+    //     "kernelVersion" => shapeSpace_kernel_version(),
+    //     "processNumber" => shapeSpace_number_processes(),
+    //     "memoryUsage" => shapeSpace_memory_usage(),
+	// ]]);  
+	//cpu stat
+	$prevVal = shell_exec("cat /proc/stat");
+	$prevArr = explode(' ',trim($prevVal));
+	$prevTotal = $prevArr[2] + $prevArr[3] + $prevArr[4] + $prevArr[5];
+	$prevIdle = $prevArr[5];
+	usleep(0.15 * 1000000);
+	$val = shell_exec("cat /proc/stat");
+	$arr = explode(' ', trim($val));
+	$total = $arr[2] + $arr[3] + $arr[4] + $arr[5];
+	$idle = $arr[5];
+	$intervalTotal = intval($total - $prevTotal);
+	$stat['cpu'] =  intval(100 * (($intervalTotal - ($idle - $prevIdle)) / $intervalTotal));
+	$cpu_result = shell_exec("cat /proc/cpuinfo | grep model\ name");
+	$stat['cpu_model'] = strstr($cpu_result, "\n", true);
+	$stat['cpu_model'] = str_replace("model name    : ", "", $stat['cpu_model']);
+	//memory stat
+	$stat['mem_percent'] = round(shell_exec("free | grep Mem | awk '{print $3/$2 * 100.0}'"), 2);
+	$mem_total = shell_exec("cat /proc/meminfo | grep MemTotal");
+	$stat['mem_total'] = formatBytes(floatval($mem_total));
+	$mem_free = shell_exec("cat /proc/meminfo | grep MemFree");
+	$stat['mem_free'] = formatBytes(floatval($mem_free));
+	$stat['mem_used'] = formatBytes(memory_get_usage());
+	//hdd stat
+	$hdd_free_space = disk_free_space("/");
+	$hdd_total_space = disk_total_space("/");
+	$hdd_used_space = $hdd_total_space - $hdd_free_space;
+	$stat['hdd_free'] = formatBytes($hdd_free_space);
+	$stat['hdd_total'] = formatBytes($hdd_total_space);
+	$stat['hdd_used'] = formatBytes($hdd_used_space);
+	$stat['hdd_percent'] = round(sprintf('%.2f',($hdd_used_space / $hdd_total_space) * 100), 2) . "%"; 
+	//network stat
+	$stat['network_rx'] = round(trim(file_get_contents("/sys/class/net/eth0/statistics/rx_bytes")) / 1024/ 1024/ 1024, 2);
+	$stat['network_tx'] = round(trim(file_get_contents("/sys/class/net/eth0/statistics/tx_bytes")) / 1024/ 1024/ 1024, 2);
+	$carico = sys_getloadavg();
+	$stat["media_carico_richieste"] = [
+		"1 minuto fa" => $carico[0] * 100 . "%",
+		"5 minuti fa" => $carico[1] * 100 . "%",
+		"10 minuti fa" => $carico[2] * 100 . "%",
+	];
+	//output headers
+	echo json_encode($stat);
 }
 ?>
 

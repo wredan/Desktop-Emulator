@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(!empty($_POST['path'])){
         $path = test_input($_POST['path']);
         if(!empty($path) && !substr_count( $path,"../")){
-            $target_dir = "../uploads" . $path . "/";
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/Desktop-Emulator/uploads" . $path;
             if(file_exists($target_dir)){
                 $file_arr = explode(".", preg_replace("/\s+/", "", basename($_FILES["uploadedFile"]["name"])));
                 $file_name = $file_arr[0];

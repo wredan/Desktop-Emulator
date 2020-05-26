@@ -40,7 +40,7 @@ function initFileManager(fileId) {
                 fileName: fileName,
                 path: path
             }
-            ajaxCall.getCall('./php/delete_file.php', data, successCallback, errorCallback);
+            ajaxCall.getCall('./php/file_manager/delete_file.php', data, successCallback, errorCallback);
         }
     }
 
@@ -61,9 +61,9 @@ function initFileManager(fileId) {
     function loadFileTable(data) {
         let table = `
                 <div class="row montserrat-600 pd-bot-2">
-                    <div class="col col-md-3">Nome</div>
+                    <div class="col col-md-4">Nome</div>
                     <div class="col col-md-3">Ultima modifica</div>
-                    <div class="col col-md-3">Tipo</div>
+                    <div class="col col-md-2">Tipo</div>
                     <div class="col col-md-2">Dimensione</div>
                     <div class="col col-md-1">Azioni</div>
                 </div>                                                           
@@ -71,10 +71,12 @@ function initFileManager(fileId) {
         data.forEach(item => {
             table += `   
                     <div class="row item montserrat-500 pd-bot-1">                                    
-                                <div class="col col-md-3">${(item.type == "Cartella") ? '<a href="" data-resource="' + item.resource + '" class="file-manager-folder" target="_blank">' + item.name + '</a>' : '<a href="' + item.resource + '" target="_blank">' + item.name + '</a>'}</div>
-                                <div class="col col-md-3">${item.date}</div>
-                                <div class="col col-md-3">${item.type}</div>
-                                <div class="col col-md-2">${(item.type != "Cartella") ? item.size : ""}</div>                                  
+                                <div class="col col-md-4 item-voice">
+                                <span><img src="assets/image/icon/${(item.type == "Cartella") ? 'opened-folder' : 'file-manager-' + item.type.split(" ")[1]}.webp" width="18px"/></span>
+                                ${(item.type == "Cartella") ? '<a href="" data-resource="' + item.resource + '" class="file-manager-folder" target="_blank">' + item.name + '</a>' : '<a href="' + item.resource + '" target="_blank">' + item.name + '</a>'}</div>
+                                <div class="col col-md-3 item-voice" >${item.date}</div>
+                                <div class="col col-md-2 item-voice">${item.type}</div>
+                                <div class="col col-md-2 item-voice">${(item.type != "Cartella") ? item.size : ""}</div>                                  
                         <div class="col col-md-1"><div class="delete-file" data-name="${item.name}.${item.ext}"><svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="1 0 21 21" width="18"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg></div> </div>                                    
                     </div>                                          
                 `;
@@ -106,7 +108,7 @@ function initFileManager(fileId) {
             console.log(error);
             $(appId).find(".file-table").html("<div class='montserrat-600 center-block text-center pd-top-2'>Impossibile connettersi al web server</div>");
         }
-        ajaxCall.getCall('./php/file_list.php', data, successCallback, errorCallback);
+        ajaxCall.getCall('./php/file_manager/file_list.php', data, successCallback, errorCallback);
     }
 
     $(`#upload-input-${appId.split('#')[1]}`).on('change', function (e) {
@@ -121,7 +123,7 @@ function initFileManager(fileId) {
             formData.append("path", path);
             $.ajax({
                 type: 'POST',
-                url: './php/upload_files.php',
+                url: './php/file_manager/upload_files.php',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -275,7 +277,7 @@ function initFileManager(fileId) {
             console.log(error);
             checkAndLoadFiles(appId, path);
         }
-        ajaxCall.getCall('./php/create_dir.php', data, successCallback, errorCallback);
+        ajaxCall.getCall('./php/file_manager/create_dir.php', data, successCallback, errorCallback);
     }
 
     function setContextMenuListener() {

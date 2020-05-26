@@ -17,9 +17,9 @@ function formatBytes($size, $precision = 2) {
       if(!empty($_GET['resource'])){
         $path = test_input($_GET['resource']);
         if(!empty($path) && !substr_count( $path,"../")){
-            $web_path = "http://" . $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] ."/Desktop-Emulator-Private/uploads" . $path;
+            $web_path = "http://" . $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] ."/Desktop-Emulator/uploads" . $path;
             $file_list = array();
-            $dir = "../uploads" . $path . "/";
+            $dir = $_SERVER['DOCUMENT_ROOT'] . "/Desktop-Emulator/uploads" . $path;
             if(file_exists($dir)){
                 $scanned_dir = scandir($dir); //scandir($dir, true); per descending oder, allegare nella chiamata ad un bottone che cambia l'ordine
                 foreach ($scanned_dir as $value) {
@@ -35,7 +35,7 @@ function formatBytes($size, $precision = 2) {
                 }
                 echo json_encode(["esito" => "success", "data" => $file_list]);
                 return;
-            }            
+            }                       
         }   
         echo json_encode(["esito" => "error", "message" => "Il seguente percorso non è valido"]);     
       }    

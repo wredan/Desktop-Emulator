@@ -111,3 +111,9 @@
 .file-manager-container .delete-file:hover {
     background-color: #f05545 ;
 }
+
+.item .item-voice {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

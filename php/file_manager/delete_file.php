@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $path = test_input($_GET['path']);
         $file_name = test_input($_GET["fileName"]);
         if(!empty($file_name) && !empty($path) && !substr_count( $path,"../")){
-            $target_dir = "../uploads" . $path;
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/Desktop-Emulator/uploads" . $path;
             delete_files($target_dir . $file_name);
             echo json_encode(["esito" => "success"]); 
             return;
