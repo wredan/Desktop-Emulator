@@ -239,11 +239,13 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
 .contextmenu-voice {
     position: relative;
 }
+
 .contextmenu-voice .menu-label {
     padding: 0.5em 0.3em;
     width: 100px;
     border-radius: 5px;
 }
+
 .contextmenu-voices .menu-label:hover {
     background-color: #e3f2fd;
 }

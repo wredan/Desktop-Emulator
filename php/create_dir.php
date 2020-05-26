@@ -9,7 +9,7 @@ function test_input($data) {
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if(!empty($_GET['path'])){
         $path = test_input($_GET['path']);
-        if(!empty($path) && !substr_count( $path,"../")){
+        if(!empty($path) && !substr_count( $path,"../") && !substr_count( $path,"..")){
             $name = !empty($_GET['name'])? test_input($_GET['name']) : "Nuova Cartella";
             $target_dir = "../uploads" . $path . '/' . $name;
             if(!file_exists($target_dir)){
