@@ -55,10 +55,11 @@ function initFileManager(fileId) {
             let resource = $(this).data('resource');
             $(this).parents('.file-manager-container').find('.file-manager-path').val('Path: ' + resource);
             checkAndLoadFiles(appId, resource);
-        });        
+        });
     }
 
     function loadFileTable(data) {
+        let img = ["jpg", "jpeg", "png", "gif", "webp"];
         let table = `
                 <div class="row montserrat-600 pd-bot-2">
                     <div class="col col-md-4">Nome</div>
@@ -72,7 +73,13 @@ function initFileManager(fileId) {
             table += `   
                     <div class="row item montserrat-500 pd-bot-1">                                    
                                 <div class="col col-md-4 item-voice">
-                                <span><img src="assets/image/icon/${(item.type == "Cartella") ? 'opened-folder' : 'file-manager-' + item.type.split(" ")[1]}.webp" width="18px"/></span>
+                                <span><img src="assets/image/icon/file_manager/${
+                (item.type == "Cartella") ?
+                    'opened_folder' :
+                    (img.includes(item.type.split(" ")[1]) ?
+                        'file_manager_img' :
+                        'file_manager_' + item.type.split(" ")[1])
+                }.webp" width="18px"/></span>
                                 ${(item.type == "Cartella") ? '<a href="" data-resource="' + item.resource + '" class="file-manager-folder" target="_blank">' + item.name + '</a>' : '<a href="' + item.resource + '" target="_blank">' + item.name + '</a>'}</div>
                                 <div class="col col-md-3 item-voice" >${item.date}</div>
                                 <div class="col col-md-2 item-voice">${item.type}</div>
@@ -80,7 +87,7 @@ function initFileManager(fileId) {
                         <div class="col col-md-1"><div class="delete-file" data-name="${item.name}.${item.ext}"><svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="1 0 21 21" width="18"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg></div> </div>                                    
                     </div>                                          
                 `;
-        });        
+        });
         return table;
     }
 
@@ -109,6 +116,10 @@ function initFileManager(fileId) {
             $(appId).find(".file-table").html("<div class='montserrat-600 center-block text-center pd-top-2'>Impossibile connettersi al web server</div>");
         }
         ajaxCall.getCall('./php/file_manager/file_list.php', data, successCallback, errorCallback);
+    }
+
+    function getPath(appId) {
+        return $(appId + ' .file-manager-path').val().split('Path: ')[1];
     }
 
     $(`#upload-input-${appId.split('#')[1]}`).on('change', function (e) {
@@ -165,7 +176,7 @@ function initFileManager(fileId) {
             checkAndLoadFiles(appId, resource);
     })
 
-    $(appId + ' .file-manager-path').on('keydown', function (e) {
+    $(`${appId} .file-manager-path`).on('keydown', function (e) {
         this.value = 'Path: /' + this.value.split('Path: /')[1];
         if (e.key == "Enter") {
             let resource = $(this).val().split('Path: ')[1];
@@ -178,7 +189,7 @@ function initFileManager(fileId) {
         }
     });
 
-    $(appId + ' .back-path-button').on('click', function (e) {
+    $(`${appId} .back-path-button`).on('click', function (e) {
         e.preventDefault();
         let resourceInput = $(appId + ' .file-manager-path');
         let resource = resourceInput.val().split('Path: ')[1];
@@ -193,9 +204,38 @@ function initFileManager(fileId) {
         }
     });
 
-    function getPath(appId) {
-        return $(appId + ' .file-manager-path').val().split('Path: ')[1];
-    }
+    $(`${appId} .file-manager-search`).on('keydown', function (e) {
+        if (e.key == "Enter") {
+            let resource = getPath(appId);
+            if (resource.slice(-1) != '/')
+                resource += '/';
+
+            let search = $(this).val();
+            if (resource && search) {
+                let successCallback = (response) => {
+                    if (response.indexOf('<') < 0) {
+                        response = JSON.parse(response);
+                        if (response.esito == "success") {
+                            if (response.data.length > 0)
+                                $(appId).find(".file-table").html(loadFileTable(response.data));
+                            else
+                                $(appId).find(".file-table").html(`<div class='montserrat-600 center-block text-center pd-top-2'>Non ci sono file corrispondenti a '${search}'</div>`);
+                        } else {
+                            alert(data.response.message)
+                        }
+                    } else {
+                        alert("Errore - guarda la console.");
+                        console.log(response);
+                    }
+                }
+                let errorCallback = (error) => {
+                    console.log(error);
+                }
+                ajaxCall.getCall("./php/file_manager/search_file.php", { path: resource, fileName: search }, successCallback, errorCallback);
+            }
+
+        }
+    });
 
     $('.file-area').on('contextmenu', function (e) {
         e.preventDefault();
@@ -229,7 +269,7 @@ function initFileManager(fileId) {
             .css({ top: e.pageY, left: e.pageX })
             .html(contextmenuContent);
 
-            setContextMenuListener();
+        setContextMenuListener();
     });
 
     function createDirectory(id) {
@@ -296,7 +336,6 @@ function initFileManager(fileId) {
                 }
             }
         });
-        
-    }
 
+    }
 }   

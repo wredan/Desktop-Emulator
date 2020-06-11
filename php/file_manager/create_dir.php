@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $path = test_input($_GET['path']);
         if(!empty($path) && !substr_count( $path,"../") && !substr_count( $path,"..")){
             $name = !empty($_GET['name'])? test_input($_GET['name']) : "Nuova Cartella";
-            $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/Desktop-Emulator/uploads" . $path . '/' . $name;
+            $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/Desktop-Emulator-Private/uploads" . $path . '/' . $name;
             if(!file_exists($target_dir)){
                 if(mkdir($target_dir))
                     echo json_encode(["esito" => "success"]);

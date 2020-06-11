@@ -17,15 +17,15 @@ function formatBytes($size, $precision = 2) {
       if(!empty($_GET['resource'])){
         $path = test_input($_GET['resource']);
         if(!empty($path) && !substr_count( $path,"../")){
-            $web_path = "http://" . $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] ."/Desktop-Emulator/uploads" . $path;
+            $web_path = "http://" . $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] ."/Desktop-Emulator-Private/uploads" . $path;
             $file_list = array();
-            $dir = $_SERVER['DOCUMENT_ROOT'] . "/Desktop-Emulator/uploads" . $path;
+            $dir = $_SERVER['DOCUMENT_ROOT'] . "/Desktop-Emulator-Private/uploads" . $path;
             if(file_exists($dir)){
                 $scanned_dir = scandir($dir); //scandir($dir, true); per descending oder, allegare nella chiamata ad un bottone che cambia l'ordine
                 foreach ($scanned_dir as $value) {
                     if($value != "." && $value != ".."){
                         $file_data["name"] = is_file( $dir . $value)? explode('.', $value)[0] : $value;
-                        $file_data["resource"] =(filetype($dir . $value) =='dir')? $path . $value . '/' : $web_path . $value; 
+                        $file_data["resource"] =(filetype($dir . $value) =='dir')? $path . $value . "/" : $web_path . $value; 
                         $file_data["type"] = (filetype($dir . $value) =='dir')? "Cartella" : "File " . explode('.', $value)[1];
                         $file_data["ext"] = (filetype($dir . $value) =='dir')? "" : explode('.', $value)[1];
                         $file_data["date"] = date('d/m/Y H:i', fileatime($dir . $value));
