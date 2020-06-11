@@ -1,0 +1,134 @@
+.paint-container {
+    position: absolute;   
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;   
+}
+
+.paint-container .tools-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70px;
+    bottom: 0;
+    background-color: #999999;
+}
+
+.paint-container .canvas-container {
+    position: absolute;
+    top: 0;
+    left: 70px;
+    right: 0;
+    bottom: 0;
+    background-color: #6d6d6d;
+}
+
+.paint-container .tool-btn, .paint-container .select-tool-btn {
+    width: 30px;
+    height: 30px;
+    background-color: #b3b3b3;
+    outline: none;
+}
+
+.paint-container .tool-btn:hover,  .paint-container .select-tool-btn {
+    background-color: #d9d9d9;
+    outline: none;
+}
+
+.paint-container .tool-btn-lg {
+    width: 100%;
+    height: 30px;
+}
+
+.paint-container .canvas-box {
+    position: absolute;
+    top: 0;
+    left: 0;   
+    resize: both;
+    overflow: hidden;
+}
+
+.paint-container .canvas{
+    background-color: white;
+}
+
+.paint-container hr {
+    border: 1px solid #6d6d6d;
+}
+
+.paint-container .color-btn {
+    width: 25px;
+    height: 25px;
+    outline: none;
+}
+.paint-container .color-selected {
+    display: inline-block;
+    min-width: 100%;  
+    height: 30px;
+    outline: none;  
+}
+
+.white {
+    background-color: white;
+}
+.black {
+    background-color: black;
+}
+.gray {
+    background-color: gray;
+}
+.red {
+    background-color: red;
+}
+.yellow {
+    background-color: yellow;
+}
+.green {
+    background-color: green;
+}
+.blue {
+    background-color: blue;
+}
+.orange {
+    background-color: orange;
+}
+.brown {
+    background-color: brown;
+}
+.purple {
+    background-color: purple;
+}
+
+.cursor-pencil {
+    cursor:  url('../../image/icon/paint/pencil-cursor.webp'), auto;	
+}
+
+.cursor-eraser {
+    cursor:  url('../../image/icon/paint/rubber-cursor.webp'), auto;	
+}
+
+.cursor-brush {
+    cursor:  url('../../image/icon/paint/brush-cursor.webp'), auto;	
+}
+
+@media screen and (min-width: 0px) {
+    .paint-container .canvas-box {       
+        width: 200px;
+        height: 200px;   
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    .paint-container .canvas-box {       
+        width: 400px;
+        height: 400px;   
+    }
+  }
+
+  @media screen and (min-width: 1400px) {
+    .paint-container .canvas-box {       
+        width: 800px;
+        height: 500px;    
+    }
+  }

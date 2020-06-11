@@ -68,6 +68,11 @@ var deleteWindow = (id, type) => {
                 return value != arrayId;
             });
             break;
+         case "paint":
+            appInstances.paint = $.grep(appInstances.paint, function (value) {
+                return value != arrayId;
+            });
+            break;
         default:
             break;
     }
@@ -228,7 +233,7 @@ function generateDesktopIcon(excludedAppList) {
     appList.forEach(value => {
         if (excludedAppList.indexOf(value) < 0){
             icons += `
-                    <div id="desktop-icon-` + value + `" class="desktop-icon" style="top: ` + ((appList.indexOf(value) + 1) * 100) + `px; left: ` + 50 + `px">
+                    <div id="desktop-icon-` + value + `" class="desktop-icon" style="top: ` + ((appList.indexOf(value) + 1) * 120) + `px; left: ` + 50 + `px">
                     ` + desktopIcons[value]() + `
                     </div>
                 ` ;            
@@ -253,8 +258,6 @@ function generateUIAppEntryPoint(excludedAppList) {
 $(document).ready(function () {
     let excludedAppList = [];
     menuTopPosition = (docHeight - 44) - ((appList.length - excludedAppList.length) * 50);
-    appInstances.terminali = [];
-    appInstances.filemanager = [];
 
     generateUIAppEntryPoint(excludedAppList);
     $('#main-container').fadeIn('slow');

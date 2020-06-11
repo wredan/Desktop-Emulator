@@ -1,7 +1,12 @@
 var appInstances = {}
+appInstances.terminali = [];
+appInstances.filemanager = [];
+appInstances.paint = [];
+
 var appList = [
     "bash",
-    "fileManager"
+    "fileManager",
+    "paint"
 ]
 
 var windowLayout = (id, iconId, title, content, fileIconName) => {
@@ -85,6 +90,102 @@ var fileManager  = (appId) => {
             </div>`
 }
 
+var paint  = (appId) => {
+    return `<div class="paint-container">
+                <div class="tools-panel">
+                    <div>
+                        <table>
+                            <tr>
+                                <td><button type="button" class="tool-btn" data-type="pencil"><img src="assets/image/icon/paint/pencil.webp" width="18px"/></button></td>
+                                <td><button type="button" class="tool-btn" data-type="eraser"><img src="assets/image/icon/paint/rubber.webp" width="18px"/></button></td>                               
+                            </tr>                              
+                            <tr>
+                                <td><button type="button" class="tool-btn" data-type="brush"><img src="assets/image/icon/paint/brush.webp" width="18px"/></button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr />
+                    <div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <button type="button" class="tool-btn-lg tool-btn" data-type="fill">Riempi</button>
+                                </td>                            
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="tool-btn-lg tool-btn" data-type="clear">Pulisci</button>
+                                </td>                            
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="select-tool-btn tool-btn-lg">
+                                        <option value="1" selected="selected">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="5">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="12">12</option>
+                                        <option value="14">14</option>
+                                        <option value="18">18</option>
+                                        <option value="22">22</option>
+                                        <option value="28">28</option>
+                                        <option value="36">36</option>
+                                        <option value="45">45</option>
+                                        <option value="64">64</option>
+                                        <option value="75">75</option>
+                                    </select>
+                                </td>
+                            </tr> 
+                        </table>
+                    </div>
+                    <hr />
+                    <div>                       
+                        <table>
+                            <tr>
+                                <td colspan="2"><button type="button" class="color-selected black"></td>                                                       
+                            </tr> 
+                            <tr>
+                                <td><button type="button" class="color-btn white" data-color="white"></button></td>
+                                <td><button type="button" class="color-btn black" data-color="black"></button></td>                            
+                            </tr>  
+                            <tr>
+                                <td><button type="button" class="color-btn gray" data-color="gray"></button></td>
+                                <td><button type="button" class="color-btn red" data-color="red"></button></td>                            
+                            </tr>   
+                            <tr>
+                                <td><button type="button" class="color-btn yellow" data-color="yellow"></button></td>
+                                <td><button type="button" class="color-btn green" data-color="green"></button></td>                            
+                            </tr>              
+                            <tr>
+                                <td><button type="button" class="color-btn blue" data-color="blue"></button></td>
+                                <td><button type="button" class="color-btn purple" data-color="purple"></button></td>
+                            </tr>
+                            <tr>
+                                <td><button type="button" class="color-btn orange" data-color="orange"></button></td>
+                                <td><button type="button" class="color-btn brown" data-color="brown"></button></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><button type="button" class="tool-btn-lg tool-btn" data-type="save">Salva</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <div class="canvas-box">
+                        <canvas id="canvas-${appId}" class="canvas cursor-pencil">
+
+                        </canvas>
+                    </div>
+                </div>
+            </div>`;
+}
+
 var desktopIcons = {
     bash: () => {
         return `
@@ -104,8 +205,18 @@ var desktopIcons = {
                     <div>
                         <img src="assets/image/icon/closed-folder.webp" alt="File Manager" width="50px">
                     </div>
+                    <div>File Manager</div>
+                </div>
+        `;
+    },
+    paint: () => {
+        return `
+                <div class="base-text" data-app="paint">
                     <div>
-                        File Manager
+                        <img src="assets/image/icon/paint/pencil_icon.webp" alt="Paint" width="50px">
+                    </div>
+                    <div>
+                       Paint
                     </div>
                 </div>
         `;
@@ -126,6 +237,14 @@ var menuOptions = {
                 <div class="row menu-option" data-option="filemanager">
                     <div class="col-xs-8 col-sm-8 col-md-8">File Manager</div>
                     <div class="col-xs-4 col-sm-4 col-md-4"><img src="assets/image/icon/closed-folder.webp" alt="File Manager" width="30px"></div>
+                </div>  
+        `;
+    },
+    paint: () => {
+        return `
+                <div class="row menu-option" data-option="paint">
+                    <div class="col-xs-8 col-sm-8 col-md-8">Paint</div>
+                    <div class="col-xs-4 col-sm-4 col-md-4"><img src="assets/image/icon/paint/pencil_icon.webp" alt="Paint" width="30px"></div>
                 </div>  
         `;
     }
