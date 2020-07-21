@@ -21,14 +21,13 @@ function initPaint(appId) {
         context.canvas.height = canvas.parent().height();
         fill("white");
         context.drawImage(resizeVirtualCanvas, 0, 0);
-
+        resizeVirtualCanvas.width = 0;
+        resizeVirtualCanvas.height = 0;
     }
     outputsize();
     // Oggetto interessante, permette di lanciare funzioni attancando un observer al div resizable interessato
     // dovrebbe funzionare su browser chromium based      
     new ResizeObserver(outputsize).observe(canvas.parent().get(0));
-
-
 
     // init colore e sfondo canvas
     changeColorSelected();
@@ -102,11 +101,12 @@ function initPaint(appId) {
         $(`${appId} .select-tool-btn`).prop('disabled', false);
     }
 
-    function fill(color) {
+    function fill(color) {        
         context.canvas.width = context.canvas.width;               
         context.beginPath();
         context.rect(0, 0, context.canvas.width, context.canvas.height);
         context.fillStyle = color;
+        context.globalCompositeOperation = "destination-out";
         context.fill();
     }
 
