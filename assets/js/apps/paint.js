@@ -31,6 +31,7 @@ function initPaint(appId) {
 
     // init colore e sfondo canvas
     changeColorSelected();
+    pencil();
     $(`${appId} .select-tool-btn`).prop('disabled', true);
 
     // attach degli eventi del mouse sull'canvas, molto simili al drag and drop, 
@@ -106,7 +107,7 @@ function initPaint(appId) {
         context.beginPath();
         context.rect(0, 0, context.canvas.width, context.canvas.height);
         context.fillStyle = color;
-        context.globalCompositeOperation = "destination-out";
+        //context.globalCompositeOperation = "destination-out";
         context.fill();
     }
 

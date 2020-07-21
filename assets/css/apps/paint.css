@@ -69,42 +69,51 @@
     outline: none;  
 }
 
-.white {
-    background-color: white;
-}
-.black {
-    background-color: black;
-}
-.gray {
-    background-color: gray;
-}
-.red {
-    background-color: red;
-}
-.yellow {
-    background-color: yellow;
-}
-.green {
-    background-color: green;
-}
-.blue {
-    background-color: blue;
-}
-.orange {
-    background-color: orange;
-}
-.brown {
-    background-color: brown;
-}
-.purple {
-    background-color: purple;
-}
+.paint-container .white {
+     background-color: white;
+ }
 
-.cursor-pencil {
-    cursor:  url('../../image/icon/paint/pencil-cursor.webp'), auto;	
-}
+ .paint-container .black {
+     background-color: black;
+ }
 
-.cursor-eraser {
+ .paint-container .gray {
+     background-color: gray;
+ }
+
+ .paint-container .red {
+     background-color: red;
+ }
+
+ .paint-container .yellow {
+     background-color: yellow;
+ }
+
+ .paint-container .green {
+     background-color: green;
+ }
+
+ .paint-container .blue {
+     background-color: blue;
+ }
+
+ .paint-container .orange {
+     background-color: orange;
+ }
+
+ .paint-container .brown {
+     background-color: brown;
+ }
+
+ .paint-container .purple {
+     background-color: purple;
+ }
+ 
+ .cursor-pencil {
+     cursor:  url('../../image/icon/paint/pencil-cursor.webp'), auto;	
+ }
+
+ .cursor-eraser {
     cursor:  url('../../image/icon/paint/rubber-cursor.webp'), auto;	
 }
 
